@@ -1,20 +1,23 @@
 import { test, expect } from '@jest/globals';
-import { getResultShotType, SHIFT } from '../core/index';
+import { SHIFT_TYPE } from '../core/index';
 //const BOWLS: number = 20;
-describe('Calculate type of result shot', () => {
-  test('Spare result shot', () => {
-    const result: SHIFT = getResultShotType(10, 10);
 
-    expect(result).toBe(SHIFT.Spare);
+describe('Calculate points', () => {
+  test('20 shots: 20 fails = zero points', () => {
+    const result: number = calculatePoints(20, 0);
+
+    expect(result).toBe(0);
   });
-  test('Strike result shot', () => {
-    const result: SHIFT = getResultShotType(20, 0);
 
-    expect(result).toBe(SHIFT.Strike);
+  test('20 shots: 10 pairs of 1 = 20 points', () => {
+    const result: number = calculatePoints(20, 10);
+
+    expect(result).toBe(20);
   });
-  test('Open Frame result shot', () => {
-    const result: SHIFT = getResultShotType(10, 0);
 
-    expect(result).toBe(SHIFT.OpenFrame);
+  test('20 shots: 1 spare, 1 success (5 bowls), 17 failures = 20 points', () => {
+    const result: number = calculatePoints(0, 1, 5);
+
+    expect(result).toBe(20);
   });
 });
